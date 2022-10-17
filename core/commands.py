@@ -174,8 +174,9 @@ async def on_component(ctx: ComponentContext):
 @client.event
 async def on_member_join(member):
     """
-    Greets the new member.
+    Greets the new member and gives the role: Expectator.
     """
+    role = discord.utils.get(member.guild.roles, name='Expectator')
     # Gets an hello
     message = ResponseGenerator.get_greeting_response()
     server_reference = make_hash('id', int(member.guild.id))
@@ -192,6 +193,8 @@ async def on_member_join(member):
     if channel:
         await channel.send('https://media.discordapp.net/attachments/590678517407285251/865606198341926912/jerry.gif?width=979&height=466')
         await channel.send(f'{message} bem vinde.')
+    
+    await member.add_roles(role)
 
 
 @client.event
